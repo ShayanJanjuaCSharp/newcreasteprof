@@ -87,22 +87,61 @@ export default function Home() {
       title: "skills",
       content: (
         <>
-          <div class="Frame1 w-[560px] h-[214px] top-[550px] left-[390px] relative z-10">
-            <div class="WhatSYourName left-[41px] top-0 absolute text-center text-black text-[28px] font-semibold font-['Open Sans']">What are your skills?</div>
-            <div class="Firstn w-[555px] h-[70px] left-[40px] top-[56px] absolute">
-              <input 
-                class="shadow appearance-none border rounded w-[300px] py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                id="sk" 
-                type="text" 
+          <div class="relative z-10 w-[560px] h-[214px] top-[550px] left-[390px]">
+            <div class="absolute left-[41px] top-0 text-center text-black text-[28px] font-semibold font-['Open Sans']">
+              What are your skills?
+            </div>
+            <div class="absolute left-[40px] top-[56px] w-[555px] h-[70px]">
+              <input
+                class="shadow appearance-none border rounded w-[300px] py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="sk"
+                type="text"
                 name="skill"
-                placeholder="Skills" 
-                value={formValues.skill} 
-                onChange={handleInputChange} 
+                placeholder="Skills"
+                value={formValues.skill}
+                onChange={handleInputChange}
               />
+              <button
+                class="relative top-3 left-5 w-[35px] h-[33px]"
+                type="button"
+                id="subsk"
+                name="subsk"
+                onClick={handleSkillChange}
+              >
+                <div class="absolute w-[35px] h-[33px] bg-[#5ad8fa] rounded-full"></div>
+                <div class="absolute w-5 h-[3px] left-[6px] top-[14px] bg-white origin-top-left rotate-[-15deg]"></div>
+                <div class="absolute text-white text-[28px] font-normal font-['Pavanam'] left-[8px] top-[31px] origin-top-left rotate-[-127deg]">
+                  T
+                </div>
+                <div class="absolute w-5 h-[3px] left-[13px] top-[25px] bg-white origin-top-left rotate-[-52deg]"></div>
+              </button>
+            </div>
+            <div class="absolute left-[30px] top-[120px] overflow-auto w-[650px] h-[300px] flex flex-wrap">
+              {formValues.skills.map((skil, index) => {
+                const rectangleWidth = skil.length * 15; // Calculate width dynamically
+      
+                return (
+                  <div class="relative flex items-center h-[42px] bg-[#3994fd] rounded-[14px] mb-2" key={index} style={{ width: `${rectangleWidth + 50}px` }}>  {/* Flex container with dynamic width */}
+                    <span class="text-white text-[28px] font-normal font-['Pavanam'] px-3">{skil}</span> {/* Skill text */}
+                    <button
+                      value={index}
+                      key={index}
+                      type="button"
+                      id="del"
+                      onClick={() => handleSkillDelete(index)}
+                      class="ml-auto mr-2 text-white text-[24px] font-normal font-['Pavanam']"
+                    >
+                      X
+                    </button> {/* X button */}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </>
       ),
+      
+      
     },
     {
       title: "exp",
@@ -134,6 +173,24 @@ export default function Home() {
   function handleInputChange(e) {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleSkillChange(e){
+    let arr = formValues.skills
+    arr.push(formValues.skill)
+    setFormValues(prev =>({
+      ...prev,
+      skills:arr
+    }))
+  }
+
+  function handleSkillDelete(i){
+    let arr = formValues.skills
+    delete arr[i]
+    setFormValues(prev =>({
+      ...prev,
+      skills:arr
+    }))
   }
 
   // Show the tab content
