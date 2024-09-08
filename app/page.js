@@ -147,11 +147,85 @@ export default function Home() {
       title: "exp",
       content: (
         <>
-          <p><input name="experiencer" value={experienceobj.role} onChange={handleInputChange} placeholder="Job Role..."/></p>
-          <p><input name="experiencec" value={experienceobj.company} onChange={handleInputChange} placeholder="Company..."/></p>
-          <p><input name="experiences" value={experienceobj.start} onChange={handleInputChange} placeholder="Start Date..."/></p>
-          <p><input name="experiencee" value={experienceobj.end} onChange={handleInputChange} placeholder="End Date..."/></p>
-          <p><input name="experiencej" value={experienceobj.jobDesc} onChange={handleInputChange} placeholder="Job Description..."/></p>
+          <div class="Frame1 w-[560px] h-[214px] top-[550px] left-[390px] relative z-10">
+            <div class="WhatSYourName left-[41px] top-0 absolute text-center text-black text-[28px] font-semibold font-['Open Sans']">What experience do you have?</div>
+            <div class="Firstn w-[555px] h-[70px] left-[40px] top-[56px] absolute flex flex-col">
+              <input 
+                class="shadow appearance-none border rounded w-[160px] py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id="r" 
+                type="text" 
+                name="role" 
+                placeholder="Role" 
+                value={experienceobj.role} 
+                onChange={handleExpChange} 
+              />
+              <input 
+                class="shadow appearance-none border rounded w-[170px] py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id="c" 
+                type="text" 
+                name="company" 
+                placeholder="Company" 
+                value={experienceobj.company} 
+                onChange={handleExpChange} 
+              />
+              <div class='flex-wrap flex'>
+              <input 
+                class="shadow appearance-none border rounded w-[100px] py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id="s" 
+                type="text" 
+                name="start" 
+                placeholder="Start Date" 
+                value={experienceobj.start} 
+                onChange={handleExpChange} 
+              />
+              <input 
+                class="shadow appearance-none border rounded w-[100px] py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id="e" 
+                type="text" 
+                name="end" 
+                placeholder="End Date" 
+                value={experienceobj.end} 
+                onChange={handleExpChange} 
+              />
+              </div>
+              <input 
+                class="shadow appearance-none border rounded w-[600px] min-h-[150px] py-2 px-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id="j" 
+                type="text" 
+                name="jobDesc" 
+                placeholder="Job Description" 
+                value={experienceobj.jobDesc} 
+                onChange={handleExpChange} 
+              />
+              <button 
+                type="button"
+                id="subexp"
+                name="subexp"
+                onClick={handleExpSubmit} class="Rectangle7 w-[84px] h-[25px] bg-[#0057bb] rounded-[5px]">Submit</button>
+            </div>
+          </div>
+          <div class="absolute  overflow-auto w-[650px] h-[800px] flex flex-col z-100">
+          {formValues.experience.map((exp, index) => {
+            console.log(exp.role)
+            console.log(exp.company)
+            console.log(exp.start)
+            console.log(exp.end)
+            console.log(exp.jobDesc)
+            return(
+              <div key='index ' class='w-[600px] h-[500px]' >
+                <div class="Role left-[410px] top-[276px] absolute text-center text-black text-[32px] font-normal font-['Inter']">{exp.role}</div>
+                <div class="Company left-[408px] top-[315px] absolute text-center text-black text-2xl font-normal font-['Inter']">{exp.company}</div>
+                <div class="StartDate left-[410px] top-[352px] absolute text-center text-black text-sm font-normal font-['Inter']">{exp.start}</div>
+                <div class="EndDate left-[486px] top-[352px] absolute text-center text-black text-sm font-normal font-['Inter']">{exp.end}</div>
+                <div class="YouGainedFromIt w-[418px] h-[87px] left-[411px] top-[388px] absolute text-black text-xs font-normal font-['Inter']">This is as job description. This is where you taslk about what you did during youyr job such ats the tasks you did, the accomplishments you aschieved, and what you gained from it</div>
+                <div class=" left-[477px] top-[352px] absolute text-center text-black text-sm font-normal font-['Inter']">-</div>
+                <div class="Rectangle11 w-[616px] h-1 left-[409px] top-[440px] absolute bg-[#d9d9d9]"></div>
+              </div>
+              
+          );
+          })}
+          </div>
+          
         </>
       ),
     },
@@ -173,6 +247,21 @@ export default function Home() {
   function handleInputChange(e) {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleExpChange(e) {
+    const { name, value } = e.target;
+    setExp((prev) => ({ ...prev, [name]: value }));
+    
+  }
+
+  function handleExpSubmit(){
+    let arr = formValues.experience
+    arr.push(experienceobj)
+    setFormValues(prev =>({
+      ...prev,
+      experience:arr
+    }))
   }
 
   function handleSkillChange(e){
